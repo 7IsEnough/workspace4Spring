@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!--正确的为各种属性赋值
@@ -25,10 +25,27 @@
         <!--ref:代表引用外面的一个值 引用其他bean car = ioc.getBean("car01")-->
         <!--<property name="car" ref="car01"></property>-->
         <property name="car">
-            <!--对象我们可以使用bean创建 car = new Car(); 引用内部bean-->
-            <bean class="com.clearlove.bean.Car">
+            <!--对象我们可以使用bean创建 car = new Car(); 引用内部bean 不能被获取到，只能内部使用-->
+            <bean id="carInner" class="com.clearlove.bean.Car">
                 <property name="carName" value="自行车"></property>
             </bean>
+        </property>
+    </bean>
+
+    <bean id="book01" class="com.clearlove.bean.Book">
+        <property name="bookName" value="东游记"></property>
+    </bean>
+
+    <bean id="person02" class="com.clearlove.bean.Person">
+        <!--如何为list类型赋值-->
+        <property name="books">
+            <!--books = new ArrayList<Book>-->
+            <list>
+                <!--list标签体中添加每一个元素-->
+                <bean id="book000x" class="com.clearlove.bean.Book" p:bookName="西游记"></bean>
+                <!--引用外部一个元素-->
+                <ref bean="book01"/>
+            </list>
         </property>
     </bean>
 </beans>

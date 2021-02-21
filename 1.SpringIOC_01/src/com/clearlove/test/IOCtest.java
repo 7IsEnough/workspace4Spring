@@ -1,11 +1,14 @@
 package com.clearlove.test;
 
+import com.clearlove.bean.Book;
 import com.clearlove.bean.Car;
 import com.clearlove.bean.Person;
 import org.junit.Test;
 import org.springframework.beans.factory.parsing.BeanEntry;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.util.List;
 
 /**
  * @author promise
@@ -86,5 +89,13 @@ public class IOCtest {
 
     Car car = person01.getCar();
     System.out.println(car);
+
+    Person person02 = (Person) ioc.getBean("person02");
+    List<Book> books = person02.getBooks();
+    System.out.println(books);
+
+    System.out.println("=================");
+    Object bean = ioc.getBean("carInner");
+    System.out.println(bean);
   }
 }
