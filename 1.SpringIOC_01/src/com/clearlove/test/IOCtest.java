@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author promise
@@ -95,7 +96,13 @@ public class IOCtest {
     System.out.println(books);
 
     System.out.println("=================");
-    Object bean = ioc.getBean("carInner");
-    System.out.println(bean);
+    // 内部bean是不能用id获取的
+    // Object bean = ioc.getBean("carInner");
+    // System.out.println(bean);
+
+    Map<String, Object> maps = person02.getMaps();
+    System.out.println(maps);
+    System.out.println("=========");
+    System.out.println(person02.getProperties());
   }
 }

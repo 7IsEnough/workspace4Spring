@@ -47,5 +47,36 @@
                 <ref bean="book01"/>
             </list>
         </property>
+
+        <!-- Map<String, Object> maps-->
+        <property name="maps">
+            <!--maps = new LinkedHashMap<>()-->
+            <map>
+                <!--一个entry代表一个键值对-->
+                <entry key="key01" value="张三"></entry>
+                <entry key="key02" value="18"></entry>
+                <entry key="key03" value-ref="book01"></entry>
+                <entry key="key04">
+                    <bean class="com.clearlove.bean.Car">
+                        <property name="carName" value="宝马"></property>
+                    </bean>
+                </entry>
+                <entry key="key05">
+                    <value>李四</value>
+                </entry>
+<!--                <entry key="key05">-->
+<!--                    <map></map>-->
+<!--                </entry>-->
+            </map>
+        </property>
+
+        <property name="properties">
+            <!--properties = new Properties() 所有的key=value都是string-->
+            <props>
+                <!--值直接写在标签体中-->
+                <prop key="username">root</prop>
+                <prop key="password">123456</prop>
+            </props>
+        </property>
     </bean>
 </beans>
