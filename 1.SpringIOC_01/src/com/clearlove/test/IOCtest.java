@@ -18,7 +18,8 @@ import java.util.Map;
 public class IOCtest {
 
   //    private ApplicationContext ioc = new ClassPathXmlApplicationContext("ioc.xml");
-  private ApplicationContext ioc = new ClassPathXmlApplicationContext("ioc2.xml");
+  //  private ApplicationContext ioc = new ClassPathXmlApplicationContext("ioc2.xml");
+  private ApplicationContext ioc = new ClassPathXmlApplicationContext("ioc3.xml");
 
   /**
    * 存在的几个问题： 1.src：源码包开始的路径，成为类路径的开始； 所有源码包里面的东西都会被合并放在类路径里面 java: /bin web: /WEB-INF/classes
@@ -104,5 +105,42 @@ public class IOCtest {
     System.out.println(maps);
     System.out.println("=========");
     System.out.println(person02.getProperties());
+  }
+
+  @Test
+  public void test05() {
+    Person person03 = (Person) ioc.getBean("person03");
+    Map<String, Object> maps = person03.getMaps();
+    System.out.println(maps);
+
+    Map<String, Object> bean = (Map<String, Object>) ioc.getBean("myMap");
+    System.out.println(bean.getClass());
+  }
+
+  /** 级联属性可以修改属性的属性，注意：原来的bean的值可能会被修改 */
+  @Test
+  public void test06() {
+    Person person04 = (Person) ioc.getBean("person04");
+    Object car = ioc.getBean("car01");
+    System.out.println("容器中的car：" + car);
+
+    Car car1 = person04.getCar();
+    System.out.println("person04中的car：" + car1);
+  }
+
+  /**
+   * BeanIsAbstractException Error creating bean with name 'person05': Bean definition is abstract
+   */
+  @Test
+  public void test07() {
+    Person person05 = (Person) ioc.getBean("person05");
+    Person person06 = (Person) ioc.getBean("person06");
+    System.out.println(person05);
+    System.out.println(person06);
+  }
+
+  @Test
+  public void test08() {
+
   }
 }

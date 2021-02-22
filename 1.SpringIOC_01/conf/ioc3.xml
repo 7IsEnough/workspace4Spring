@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--原来是按照配置的顺序创建bean-->
+    <!--改变bean的创建顺序-->
+    <!--bean之间的依赖(只是改变创建顺序)-->
+    <bean id="car" class="com.clearlove.bean.Car" depends-on="person,book"></bean>
+    <bean id="person" class="com.clearlove.bean.Person"></bean>
+    <bean id="book" class="com.clearlove.bean.Book"></bean>
+</beans>

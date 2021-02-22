@@ -6,40 +6,50 @@ package com.clearlove.bean;
  */
 public class Car {
 
-    private String carName;
-    private String price;
-    private String color;
+  private String carName;
+  private String price;
+  private String color;
 
-    public String getCarName() {
-        return carName;
-    }
+  public Car() {
+    System.out.println("car被创建。。");
+  }
 
-    public void setCarName(String carName) {
-        this.carName = carName;
-    }
+  public String getCarName() {
+    return carName;
+  }
 
-    public String getPrice() {
-        return price;
-    }
+  public void setCarName(String carName) {
+    this.carName = carName;
+  }
 
-    public void setPrice(String price) {
-        this.price = price;
-    }
+  public String getPrice() {
+    return price;
+  }
 
-    public String getColor() {
-        return color;
-    }
+  public void setPrice(String price) {
+    this.price = price;
+  }
 
-    public void setColor(String color) {
-        this.color = color;
-    }
+  public String getColor() {
+    return color;
+  }
 
-    @Override
-    public String toString() {
-        return "Car{" +
-                "carName='" + carName + '\'' +
-                ", price='" + price + '\'' +
-                ", color='" + color + '\'' +
-                '}';
-    }
+  public void setColor(String color) {
+    this.color = color;
+  }
+
+  @Override
+  public String toString() {
+    return "Car{"
+        + "carName='"
+        + carName
+        + '\''
+        + ", price='"
+        + price
+        + '\''
+        + ", color='"
+        + color
+        + '\''
+        + '}';
+  }
 }
