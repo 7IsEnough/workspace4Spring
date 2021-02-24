@@ -6,7 +6,37 @@
     <!--原来是按照配置的顺序创建bean-->
     <!--改变bean的创建顺序-->
     <!--bean之间的依赖(只是改变创建顺序)-->
-    <bean id="car" class="com.clearlove.bean.Car" depends-on="person,book"></bean>
+    <bean id="car" class="com.clearlove.bean.Car" depends-on="person"></bean>
     <bean id="person" class="com.clearlove.bean.Person"></bean>
-    <bean id="book" class="com.clearlove.bean.Book"></bean>
+
+
+    <!--测试bean的作用域，分别创建单实例和多实例的bean
+    bean的作用域：指定bean是否单实例 默认：单实例的
+
+    prototype: 多实例的
+        1. 容器启动默认不会去创建多实例bean
+        2. 获取的时候创建这个bean
+        3. 每次获取都会创建一个新的对象
+    singleton: 单实例的；默认的
+        1. 在容器启动完成之前就已经创建好对象，保存在容器中了
+        2. 任何时候获取都是获取之前创建好的那个对象
+
+    request: 在web环境下，同一次请求创建一个Bean实例(没用)
+    session: 在web环境下，同一次会话创建一个Bean实例(没用)
+    -->
+    <bean id="book" class="com.clearlove.bean.Book" scope="prototype"></bean>
+
+    <!--配置通过静态工厂方法创建的bean、实例工厂方法创建的bean、FactoryBean-->
+    <!--bean的创建默认就是框架利用反射new出来的bean实例-->
+    <!--工厂模式：工厂帮我们创建对象；有一个专门帮我们创建对象的类，这个类就是工厂
+        AirPlane ap = AirPlaneFactory.getAirPlane(String jzName);
+
+        静态工厂：工厂本身不用创建对象；通过静态方法调用，对象 = 工程类.工厂方法名()
+        实例工厂；工厂本身需要创建对象；
+            工厂类 工厂对象 = new 工厂类();
+            工厂对象.getAirPlane("张三");
+    -->
+    <bean id="airPlane01" class="com.clearlove.bean.AirPlane">
+        <property name="jzName" value="张三"></property>
+    </bean>
 </beans>
