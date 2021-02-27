@@ -36,7 +36,36 @@
             工厂类 工厂对象 = new 工厂类();
             工厂对象.getAirPlane("张三");
     -->
-    <bean id="airPlane01" class="com.clearlove.bean.AirPlane">
-        <property name="jzName" value="张三"></property>
+<!--    <bean id="airPlane01" class="com.clearlove.bean.AirPlane">-->
+<!--        <property name="jzName" value="张三"></property>-->
+<!--    </bean>-->
+
+    <!--1.静态工厂(不需要创建工厂本身) factory-method="getAirPlane"：指定哪个方法是工厂方法
+        class：指定静态工厂全类名
+        factory-method：指定工厂方法
+        constructor-arg：可以为方法传参
+    -->
+    <bean id="airPlane01" class="com.clearlove.factory.AirPlaneStaticFactory" factory-method="getAirPlane">
+        <!--可以为方法指定参数-->
+        <constructor-arg value="李四"></constructor-arg>
+    </bean>
+
+    <!--2.实例工厂使用
+        factory-method：指定这个实例工厂中哪个方法是工厂方法
+    -->
+    <bean id="airPlaneInstanceFactory"
+          class="com.clearlove.factory.AirPlaneInstanceFactory"
+
+    ></bean>
+    <!--factory-bean：指定当前对象创建使用哪个工厂
+        1.先配置出实例工厂对象
+        2.配置我们要创建的airPlane使用哪个工厂创建
+            1.factory-bean：指定使用哪个工厂实例
+            2.factory-method：使用哪个工厂方法
+    -->
+    <bean id="airPlane02" class="com.clearlove.bean.AirPlane"
+          factory-bean="airPlaneInstanceFactory"
+          factory-method="getAirPlane">
+        <constructor-arg value="王五"></constructor-arg>
     </bean>
 </beans>

@@ -142,11 +142,20 @@ public class IOCtest {
   @Test
   public void test08() {
     System.out.println("容器启动完成....");
-//    Object bean = ioc.getBean("book");
-//    Object bean2 = ioc.getBean("book");
-//    System.out.println(bean == bean2);
+    //    Object bean = ioc.getBean("book");
+    //    Object bean2 = ioc.getBean("book");
+    //    System.out.println(bean == bean2);
     Object bean = ioc.getBean("book");
     Object bean2 = ioc.getBean("book");
     System.out.println(bean == bean2);
+  }
+
+  @Test
+  public void test09() {
+    System.out.println("容器启动完成....");
+    //    Object bean = ioc.getBean("airPlane01");
+    //    System.out.println(bean);
+    Object bean = ioc.getBean("airPlane02");
+    System.out.println(bean);
   }
 }
