@@ -68,4 +68,11 @@
           factory-method="getAirPlane">
         <constructor-arg value="王五"></constructor-arg>
     </bean>
+
+    <!--FactoryBean*(是Spring规定的一个接口)；
+    只要是这个接口的实现类，spring都认为是一个工厂
+    1.ioc容器启动的时候不会创建实例
+    2.FactoryBean：获取的时候才创建对象
+    -->
+    <bean id="myFactoryBeanImpl" class="com.clearlove.factory.MyFactoryBeanImpl"></bean>
 </beans>

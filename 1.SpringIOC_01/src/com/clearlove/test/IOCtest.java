@@ -158,4 +158,11 @@ public class IOCtest {
     Object bean = ioc.getBean("airPlane02");
     System.out.println(bean);
   }
+
+  @Test
+  public void test10() {
+//    Object bean = ioc.getBean("myFactoryBeanImpl");
+//    Object bean2 = ioc.getBean("myFactoryBeanImpl");
+//    System.out.println(bean == bean2);
+  }
 }
