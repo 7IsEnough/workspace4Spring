@@ -1,4 +1,4 @@
-package com.clearlove.com.clearlove.test;
+package com.clearlove.test;
 
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
