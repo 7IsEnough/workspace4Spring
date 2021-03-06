@@ -1,6 +1,7 @@
 package com.clearlove.test;
 
 import com.clearlove.bean.Car;
+import com.clearlove.bean.Person;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -16,7 +17,8 @@ import java.sql.SQLException;
 public class IOCTest {
 
     //    ConfigurableApplicationContext ioc = new ClassPathXmlApplicationContext("applicationContext.xml");
-    ConfigurableApplicationContext ioc = new ClassPathXmlApplicationContext("applicationContext02.xml");
+//    ConfigurableApplicationContext ioc = new ClassPathXmlApplicationContext("applicationContext02.xml");
+    ConfigurableApplicationContext ioc = new ClassPathXmlApplicationContext("applicationContext03.xml");
 
     /**
      * 单例：Bean的生命周期
@@ -49,5 +51,16 @@ public class IOCTest {
 
         Car bean2 = ioc.getBean(Car.class);
         System.out.println(bean2);
+    }
+
+    /**
+     * 测试基于XML的自动装配
+     */
+    @Test
+    public void test03() {
+//        Person person = ioc.getBean(Person.class);
+//        System.out.println(person);
+        Person person = (Person) ioc.getBean("person04");
+        System.out.println(person);
     }
 }

@@ -16,6 +16,8 @@ public class Person {
   private Integer age;
   private String gender;
   private String email;
+  private Double salary;
+
 
   private Car car;
   private List<Book> books;
@@ -26,26 +28,31 @@ public class Person {
     System.out.println("Person创建了。。。。");
   }
 
-  public Person(String lastName, Integer age, String gender) {
-    this.lastName = lastName;
-    this.age = age;
-    this.gender = gender;
-    System.out.println("三个参数的构造器。。。age");
-  }
+//  public Person(String lastName, Integer age, String gender) {
+//    this.lastName = lastName;
+//    this.age = age;
+//    this.gender = gender;
+//    System.out.println("三个参数的构造器。。。age");
+//  }
 
-  public Person(String lastName,String email, String gender) {
-    this.lastName = lastName;
-    this.gender = gender;
-    this.email = email;
-    System.out.println("三个参数的构造器。。。email");
-  }
+//  public Person(String lastName,String email, String gender) {
+//    this.lastName = lastName;
+//    this.gender = gender;
+//    this.email = email;
+//    System.out.println("三个参数的构造器。。。email");
+//  }
 
-  public Person(String lastName, Integer age, String gender, String email) {
-    this.lastName = lastName;
-    this.age = age;
-    this.gender = gender;
-    this.email = email;
-    System.out.println("有参构造器。。。");
+//  public Person(String lastName, Integer age, String gender, String email) {
+//    this.lastName = lastName;
+//    this.age = age;
+//    this.gender = gender;
+//    this.email = email;
+//    System.out.println("有参构造器。。。");
+//  }
+
+  public Person(Car car) {
+    this.car = car;
+    System.out.println("可以为car赋值的有参构造器....");
   }
 
   public String getLastName() {
@@ -113,6 +120,14 @@ public class Person {
     this.properties = properties;
   }
 
+  public Double getSalary() {
+    return salary;
+  }
+
+  public void setSalary(Double salary) {
+    this.salary = salary;
+  }
+
   @Override
   public String toString() {
     return "Person{" +
@@ -120,10 +135,8 @@ public class Person {
             ", age=" + age +
             ", gender='" + gender + '\'' +
             ", email='" + email + '\'' +
+            ", salary=" + salary +
             ", car=" + car +
-            ", books=" + books +
-            ", maps=" + maps +
-            ", properties=" + properties +
             '}';
   }
 }
