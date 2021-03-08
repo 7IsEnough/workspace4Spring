@@ -63,4 +63,26 @@
     <!--DI(依赖注入)-->
     <!--使用@Autowired注解实现根据类型实现自动装配-->
     <context:component-scan base-package="com.clearlove"></context:component-scan>
+    <!--@Autowired原理：
+    @Autowired
+    private BookService bookService;
+    1.先按照类型去容器中找到对应的组件；bookService = ioc.getBean(BookService.class);
+        1).找到一个：找到就赋值
+        2).没有找到：抛异常
+        3).找到多个?装配上?
+            1)).按照变量名作为id继续匹配；BookService(bookService)、BookServiceExt(bookServiceExt)
+                @Autowired
+                private BookService bookServiceExt2;
+                1))).匹配上：装配
+                2))).没有匹配上?报错
+                    原因：因为我们按照变量名作为id继续匹配的；
+                    使用@Qualifier("bookService")指定一个新id
+                        1)))).找到：装配
+                        2)))).找不到：报错
+         发现@Autowired标注的自动装配的属性默认是一定装配上的
+            设置@Autowired(require = false)找到就装配，找不到就装配Null
+    -->
+
+    <!--如果资源类型的bean不止一个，默认根据@Autowired注解标记的成员变量名作为id查找bean，进行装配-->
+    <!--如果根据成员变量名作为id还是找不到bean，可以使用@Qualifier注解明确指定目标bean的id-->
 </beans>
