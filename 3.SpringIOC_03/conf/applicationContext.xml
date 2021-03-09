@@ -85,4 +85,12 @@
 
     <!--如果资源类型的bean不止一个，默认根据@Autowired注解标记的成员变量名作为id查找bean，进行装配-->
     <!--如果根据成员变量名作为id还是找不到bean，可以使用@Qualifier注解明确指定目标bean的id-->
+
+    <!--@Autowired、@Resource、@Inject：都是自动装配的意思
+    @Autowired最强大：Spring自己的注解
+    @Resource：j2ee；java的标准
+    @Inject：EJB
+
+    @Resource：扩展性更强；因为是java的标准。如果切换成另外一个容器框架，@Resource还是可以使用的，@Autowired就不行了
+    -->
 </beans>
