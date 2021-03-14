@@ -1,10 +1,12 @@
 package com.clearlove.proxy;
 
 import com.clearlove.inter.Calculator;
+import com.clearlove.utils.LogUtils;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.Arrays;
 
 /**
  * @author promise
@@ -35,8 +37,17 @@ public class CalculatorProxy {
           public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
             // 利用反射执行目标方法
             // 目标方法执行后的返回值
-            System.out.println("这是动态代理将要帮你执行方法....");
-            Object result = method.invoke(calculator, args);
+            // System.out.println("这是动态代理将要帮你执行方法....");
+            Object result = null;
+            try {
+              LogUtils.logStart(method, args);
+              result = method.invoke(calculator, args);
+              LogUtils.logReturn(method, result);
+            } catch (Exception e) {
+                LogUtils.logException(method, e);
+            } finally {
+                LogUtils.logEnd(method);
+            }
             // 返回值必须返回出去，外界才能拿到真正执行后的返回值
             return result;
           }
