@@ -3,6 +3,9 @@ package com.clearlove.inter;
 /**
  * @author promise
  * @date 2021/3/13 - 17:46
+ * 接口不加载到容器中：
+ * 实际上可以加：加了也不创建对象，只要这个组件是一个接口
+ * 相当于告诉Spring，ioc容器中可能有这种类型的组件
  */
 public interface Calculator {
 
