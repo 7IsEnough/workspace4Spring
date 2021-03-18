@@ -50,8 +50,38 @@ public class AOPTest {
     // 没有接口就是本类类型
     // class com.clearlove.impl.MyMathCalculator$$EnhancerByCGLIB$$218e1b85
     // cglib帮我们创建好的代理对象
-    MyMathCalculator bean = ioc.getBean(MyMathCalculator.class);
+//    MyMathCalculator bean = ioc.getBean(MyMathCalculator.class);
+    MyMathCalculator bean = (MyMathCalculator) ioc.getBean("myMathCalculator");
     bean.add(1, 2);
     System.out.println(bean.getClass());
+  }
+
+  @Test
+  public void test02() {
+    MyMathCalculator bean = ioc.getBean(MyMathCalculator.class);
+    bean.add(1, 0.2);
+  }
+
+  /**
+   * 通知方法的执行顺序
+   *
+   * try{
+   *     @Before
+   *     method.invoke(obj, args)
+   *     @AfterReturning
+   * } catch() {
+   *     @AfterThrowing
+   * } finally {
+   *     @After
+   * }
+   * 正常执行：@Before(前置通知) ==> @After(后置通知) ==> @AfterReturning(正常返回通知)
+   * 异常执行：@Before(前置通知) ==> @After(后置通知) ==> @AfterThrowing(方法异常)
+   */
+  @Test
+  public void test03() {
+    MyMathCalculator bean = ioc.getBean(MyMathCalculator.class);
+    bean.add(1, 1);
+    System.out.println("======================");
+    bean.div(1, 0);
   }
 }

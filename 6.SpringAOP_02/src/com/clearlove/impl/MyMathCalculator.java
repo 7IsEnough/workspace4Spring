@@ -10,6 +10,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyMathCalculator /*implements Calculator*/ {
 
+
+    public int add(int i, double j) {
+      return 0;
+    }
+
 //  @Override
   public int add(int i, int j) {
     int result = i + j;
