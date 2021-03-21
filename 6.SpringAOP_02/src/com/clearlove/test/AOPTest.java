@@ -82,7 +82,7 @@ public class AOPTest {
     MyMathCalculator bean = ioc.getBean(MyMathCalculator.class);
     int add = bean.add(1, 1);
     System.out.println("======================");
-    bean.div(1, 0);
-    System.out.println("=====================");
+//    bean.div(1, 0);
+//    System.out.println("=====================");
   }
 }
