@@ -1,6 +1,7 @@
 package com.clearlove.utils;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
@@ -35,11 +36,15 @@ public class LogUtils {
    * @AfterReturning： 在目标方法正常返回之后；    返回通知
    * @AfterThrowing： 在目标方法抛出异常之后运行； 异常通知
    * @Around： 环绕                              环绕通知
+   *
+   * 抽取可重用的切入点表达式
+   * 1.随便声明一个没有实现的返回void的空方法
+   * 2.给方法上标注@Pointcut注解
    */
 
   // 想在执行目标方法之前运行：写切入点表达式
   // execution(方法权限符 返回值类型 方法签名)
-  @Before("execution(public int com.clearlove.impl.MyMathCalculator.*(..))")
+  @Before("hahaMyPoint()")
   public static void logStart(JoinPoint joinPoint) {
     // 获取到目标方法运行时使用的参数
     Object[] args = joinPoint.getArgs();
@@ -81,7 +86,7 @@ public class LogUtils {
    */
   // 想在目标方法正常执行完成之后执行
   // 告诉Spring这个result用来接收返回值：returning = "result"
-  @AfterReturning(value = "execution(public int com.clearlove..MyMathCalculator.*(..))", returning = "result")
+  @AfterReturning(value = "hahaMyPoint()", returning = "result")
   public static void logReturn(JoinPoint joinPoint, Object result) {
     String name = joinPoint.getSignature().getName();
     System.out.println(name + "方法正常执行完成，计算结果是：" + result);
@@ -102,7 +107,7 @@ public class LogUtils {
    * })
    */
   // 想在目标方法出现异常的时候执行
-  @AfterThrowing(value = "execution(public int com.clearlove.impl.MyMathCalculator.*(..))", throwing = "exception")
+  @AfterThrowing(value = "hahaMyPoint()", throwing = "exception")
   public static void logException(JoinPoint joinPoint, Exception exception) {
     Object[] args = joinPoint.getArgs();
     System.out.println(
@@ -119,9 +124,81 @@ public class LogUtils {
    *    不知道的参数一定告诉Spring这是什么?
    */
   // 想在目标方法结束的时候执行
-  @After("execution(public int com.clearlove.impl.MyMathCalculator.*(..))")
+  @After("hahaMyPoint()")
   private int logEnd(JoinPoint joinPoint) {
     System.out.println(joinPoint.getSignature().getName() + "方法最终结束了");
     return 0;
+  }
+
+  @Pointcut("execution(public int com.clearlove.impl.MyMathCalculator.*(..))")
+  public void hahaMyPoint() {
+
+  }
+
+  /**
+   * @Around： 环绕：是SPring中强大的通知方法
+   *    动态代理
+   *    try{
+   *        // 前置通知
+   *        method.invoke(obj, args);
+   *        // 返回通知
+   *    }catch (Exception e) {
+   *        // 异常通知
+   *    }finally {
+   *        // 后置通知
+   *    }
+   *
+   *    四合一通知就是环绕通知
+   *    环绕通知中有一个参数 ProceedingJoinPoint pjp
+   *
+   *    环绕通知：是优先于普通通知执行，执行顺序：
+   *
+   *    [普通前置]
+   *
+   *    {
+   *      try{
+   *        环绕前置
+   *        环绕执行：目标方法执行
+   *        环绕返回
+   *      } catch () {
+   *        环绕出现异常
+   *      } finally {
+   *        环绕后置
+   *      }
+   *
+   *    }
+   *
+   *    [普通后置]
+   *    [普通方法返回/方法异常]
+   *
+   *    新的顺序：环绕前置--普通前置--目标方法执行--环绕正常返回/出现异常--环绕后置--普通后置--普通返回/异常
+   *
+   */
+  @Around(value = "hahaMyPoint()")
+  public Object myAround(ProceedingJoinPoint pjp) throws Throwable {
+
+    Object[] args = pjp.getArgs();
+
+
+    Object proceed = null;
+    try {
+      //@Before
+      System.out.println("环绕前置通知："+ pjp.getSignature().getName() +"方法开始");
+      // 利用反射调用目标方法即可，就是method.invoke(obj, args)
+      proceed = pjp.proceed(args);
+      //@AfterReturning
+      System.out.println("环绕返回通知："+ pjp.getSignature().getName() +"方法返回：" + proceed);
+    } catch (Exception e) {
+      //@AfterThrowing
+      System.out.println("环绕异常通知："+ pjp.getSignature().getName() +"方法出现异常，异常信息：" + e);
+      // 为了让外界能知道这个异常，这个异常一定跑出去
+      throw new RuntimeException(e);
+    } finally{
+      //@After
+      System.out.println("环绕后置通知："+ pjp.getSignature().getName() +"方法结束");
+    }
+
+    // 反射调用后的返回值也一定返回出去
+    return proceed;
   }
 }
