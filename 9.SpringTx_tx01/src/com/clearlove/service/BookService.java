@@ -3,6 +3,7 @@ package com.clearlove.service;
 import com.clearlove.dao.BookDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author promise
@@ -19,6 +20,7 @@ public class BookService {
    * @param username
    * @param isbn
    */
+  @Transactional
   public void checkout(String username, String isbn) {
     // 1.减库存
     bookDao.updateStock(isbn);
