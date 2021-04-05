@@ -18,6 +18,9 @@ public class TxTest {
     @Test
     public void test() throws FileNotFoundException {
         BookService bookService = ioc.getBean(BookService.class);
-        bookService.checkout("Tom", "ISBN-001");
+//        bookService.checkout("Tom", "ISBN-001");
+
+        int price = bookService.getPrice("ISBN-001");
+    System.out.println("读取到的数据：" + price);
     }
 }

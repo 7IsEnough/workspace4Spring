@@ -3,6 +3,7 @@ package com.clearlove.service;
 import com.clearlove.dao.BookDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.FileInputStream;
@@ -73,5 +74,15 @@ public class BookService {
 
 //        int i = 10/0;
         new FileInputStream("D://hahaha.aa");
+    }
+
+    /**
+     * 根据业务的特性调整隔离级别
+     * @param isbn
+     * @return
+     */
+    @Transactional(readOnly = true, isolation = Isolation.READ_UNCOMMITTED)
+    public int getPrice(String isbn) {
+        return bookDao.getPrice(isbn);
     }
 }
