@@ -13,14 +13,21 @@ import java.io.FileNotFoundException;
  */
 public class TxTest {
 
-    ApplicationContext ioc = new ClassPathXmlApplicationContext("tx.xml");
+  ApplicationContext ioc = new ClassPathXmlApplicationContext("tx.xml");
 
-    @Test
-    public void test() throws FileNotFoundException {
-        BookService bookService = ioc.getBean(BookService.class);
-//        bookService.checkout("Tom", "ISBN-001");
+  /**
+   * 有事务的业务逻辑，容器中保存的是这个业务逻辑的代理对象
+   *
+   * @throws FileNotFoundException
+   */
+  @Test
+  public void test() throws FileNotFoundException {
+    BookService bookService = ioc.getBean(BookService.class);
+    bookService.checkout("Tom", "ISBN-001");
 
-        int price = bookService.getPrice("ISBN-001");
-    System.out.println("读取到的数据：" + price);
-    }
+    //        int price = bookService.getPrice("ISBN-001");
+    //    System.out.println("读取到的数据：" + price);
+
+    System.out.println(bookService.getClass());
+  }
 }
