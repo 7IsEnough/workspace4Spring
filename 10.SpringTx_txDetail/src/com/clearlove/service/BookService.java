@@ -4,6 +4,7 @@ import com.clearlove.dao.BookDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.FileInputStream;
@@ -56,10 +57,23 @@ public class BookService {
      *
      * timeout-int(秒为单位): 超时：事务超出指定执行时长后自动终止并回滚
      *
+     * propagation-Propagation: 事务的传播行为
+     *     传播行为(事务的传播 + 事务的行为)
+     *     如果有多个事务嵌套运行：子事务是否要和大事务共用一个事务
+     * 传播行为
+     * AService{
+     *     tx_a(){
+     *         // a的一些方法
+     *         tx_b(){
+     *         }
+     *         tx_c(){
+     *         }
+     *     }
+     * }
      *
      */
-    @Transactional(timeout = 3, readOnly = false)
-    public void checkout(String username, String isbn) throws FileNotFoundException {
+    @Transactional(timeout = 3, readOnly = false, propagation = Propagation.REQUIRES_NEW)
+    public void checkout(String username, String isbn){
         // 1.减库存
         bookDao.updateStock(isbn);
 
@@ -73,16 +87,27 @@ public class BookService {
         bookDao.updateBalance(username, bookDao.getPrice(isbn));
 
 //        int i = 10/0;
-        new FileInputStream("D://hahaha.aa");
+//        new FileInputStream("D://hahaha.aa");
     }
 
     /**
      * 根据业务的特性调整隔离级别
+     * isolation=Isolation.READ_UNCOMMITTED:读出脏数据
+     *
+     *  READ_COMMITTED: 实际上业务用的最多的也是这个
+     *
      * @param isbn
      * @return
      */
     @Transactional(readOnly = true, isolation = Isolation.READ_UNCOMMITTED)
     public int getPrice(String isbn) {
         return bookDao.getPrice(isbn);
+    }
+
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void updatePrice(String isbn, int price) {
+        bookDao.updatePrice(isbn, price);
+        int i = 10/0;
     }
 }

@@ -1,6 +1,7 @@
 package com.clearlove.test;
 
 import com.clearlove.service.BookService;
+import com.clearlove.service.MulService;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -23,11 +24,15 @@ public class TxTest {
   @Test
   public void test() throws FileNotFoundException {
     BookService bookService = ioc.getBean(BookService.class);
-    bookService.checkout("Tom", "ISBN-001");
+
+    MulService bean = ioc.getBean(MulService.class);
+    bean.mulTx();
+
+//    bookService.checkout("Tom", "ISBN-001");
 
     //        int price = bookService.getPrice("ISBN-001");
     //    System.out.println("读取到的数据：" + price);
 
-    System.out.println(bookService.getClass());
+//    System.out.println(bookService.getClass());
   }
 }
