@@ -72,7 +72,7 @@ public class BookService {
      * }
      *
      */
-    @Transactional(timeout = 3, readOnly = false, propagation = Propagation.REQUIRES_NEW)
+    @Transactional(timeout = 3, readOnly = false, propagation = Propagation.REQUIRED)
     public void checkout(String username, String isbn){
         // 1.减库存
         bookDao.updateStock(isbn);
@@ -105,9 +105,8 @@ public class BookService {
     }
 
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void updatePrice(String isbn, int price) {
         bookDao.updatePrice(isbn, price);
-        int i = 10/0;
     }
 }

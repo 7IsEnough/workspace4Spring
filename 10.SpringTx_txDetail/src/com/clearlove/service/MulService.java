@@ -24,6 +24,6 @@ public class MulService {
         // REQUIRED
         bookService.updatePrice("ISBN-002", 998);
 
-//        int i = 10/0;
+        int i = 10/0;
     }
 }
