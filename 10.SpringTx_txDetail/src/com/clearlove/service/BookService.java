@@ -72,7 +72,7 @@ public class BookService {
      * }
      *
      */
-    @Transactional(timeout = 3, readOnly = false, propagation = Propagation.REQUIRED)
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     public void checkout(String username, String isbn){
         // 1.减库存
         bookDao.updateStock(isbn);
@@ -108,5 +108,19 @@ public class BookService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void updatePrice(String isbn, int price) {
         bookDao.updatePrice(isbn, price);
+    }
+
+
+    @Transactional(timeout = 3)
+    public void mulTx() {
+        // 回滚不回滚都是可以设置的
+        // 传播行为来设置这个事务方法是不是和之前的大事务共享一个事务(使用同一条连接)
+        // REQUIRED  REQUIRES_NEW
+        checkout("Tom", "ISBN-001");
+
+        // REQUIRED
+        updatePrice("ISBN-002", 998);
+
+        int i = 10/0;
     }
 }
